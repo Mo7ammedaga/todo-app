@@ -2,7 +2,8 @@
 
 A responsive task manager built with **HTML, CSS and vanilla JavaScript**, with no frameworks or external libraries. Users can add, complete, edit and delete tasks, and the interface adapts to screen size and to the system's light or dark theme.
 
-<!-- Screenshot: save an image as screenshot.png next to this file, then replace this line with: ![To-Do App](screenshot.png) -->
+![To-Do App](screenshot.png)
+![To-Do App](screenshot1.png)
 
 ## Table of Contents
 
