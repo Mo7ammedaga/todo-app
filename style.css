@@ -1,0 +1,382 @@
+/* ==========================================================
+   1. DESIGN TOKENS
+   ========================================================== */
+:root {
+  --bg-from: #eef2ff;
+  --bg-to: #f8fafc;
+  --surface: #ffffff;
+  --surface-hover: #f8faff;
+  --text: #0f172a;
+  --text-muted: #94a3b8;
+  --text-soft: #475569;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-soft: rgba(79, 70, 229, 0.15);
+
+  --danger: #dc2626;
+  --danger-soft: #fee2e2;
+  --danger-soft-hover: #fecaca;
+
+  --neutral-soft: #f1f5f9;
+  --neutral-soft-hover: #e2e8f0;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  --shadow-card:
+    0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-from: #0f172a;
+    --bg-to: #020617;
+    --surface: #1e293b;
+    --surface-hover: #243349;
+    --text: #f1f5f9;
+    --text-muted: #64748b;
+    --text-soft: #cbd5e1;
+    --border: #334155;
+    --border-strong: #475569;
+
+    --primary: #6366f1;
+    --primary-hover: #818cf8;
+    --primary-soft: rgba(99, 102, 241, 0.3);
+
+    --danger: #f87171;
+    --danger-soft: rgba(248, 113, 113, 0.12);
+    --danger-soft-hover: rgba(248, 113, 113, 0.22);
+
+    --neutral-soft: #334155;
+    --neutral-soft-hover: #475569;
+
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* ==========================================================
+   2. BASE
+   ========================================================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 48px 20px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  color: var(--text);
+  background: linear-gradient(160deg, var(--bg-from), var(--bg-to));
+  -webkit-font-smoothing: antialiased;
+}
+
+#title {
+  margin: 0 0 32px;
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--primary), #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ==========================================================
+   3. CARDS
+   ========================================================== */
+.task-input,
+.task-list {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* ==========================================================
+   4. INPUT CARD
+   ========================================================== */
+.task-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.task-input h2 {
+  flex: 0 0 100%;
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.task-input input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition:
+    border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+
+.task-input input::placeholder {
+  color: var(--text-muted);
+}
+
+.task-input input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+
+/* ==========================================================
+   5. TASK LIST
+   ========================================================== */
+.task-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s var(--ease);
+  animation: slide-in 0.3s var(--ease);
+}
+
+.task-list li:last-child {
+  border-bottom: none;
+}
+
+.task-list li:hover {
+  background: var(--surface-hover);
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Label */
+.task-list label {
+  flex: 1;
+  font-size: 15px;
+  color: var(--text);
+  cursor: pointer;
+  word-break: break-word;
+  transition: color 0.2s var(--ease);
+}
+
+/* Completed state (no JS needed) */
+.task-list input[type='checkbox']:checked + label {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+/* ==========================================================
+   6. CUSTOM CHECKBOX
+   ========================================================== */
+.task-list input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  cursor: pointer;
+  background-color: var(--surface);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  transition:
+    background-color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    transform 0.15s var(--ease);
+}
+
+.task-list input[type='checkbox']:hover {
+  border-color: var(--primary);
+}
+
+.task-list input[type='checkbox']:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-6.5'/%3E%3C/svg%3E");
+}
+
+.task-list input[type='checkbox']:active {
+  transform: scale(0.88);
+}
+
+.task-list input[type='checkbox']:focus-visible {
+  outline: 3px solid var(--primary-soft);
+  outline-offset: 2px;
+}
+
+/* ==========================================================
+   7. EDIT MODE
+   JS only toggles the `editing` class; CSS decides what hides.
+   ========================================================== */
+.task-list li.editing label {
+  display: none;
+}
+
+.edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-sm);
+  outline: none;
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+
+/* ==========================================================
+   8. BUTTONS
+   ========================================================== */
+button {
+  padding: 10px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-md);
+  transition:
+    background-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease),
+    transform 0.1s var(--ease);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--primary-soft);
+  outline-offset: 2px;
+}
+
+.add {
+  color: #ffffff;
+  background: var(--primary);
+  box-shadow: 0 2px 8px var(--primary-soft);
+}
+
+.add:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 14px var(--primary-soft);
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.edit-btn {
+  color: var(--text-soft);
+  background: var(--neutral-soft);
+}
+
+.edit-btn:hover {
+  background: var(--neutral-soft-hover);
+}
+
+.delete-btn {
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.delete-btn:hover {
+  background: var(--danger-soft-hover);
+}
+
+/* ==========================================================
+   9. RESPONSIVE
+   ========================================================== */
+@media (max-width: 600px) {
+  body {
+    padding: 28px 12px;
+  }
+
+  #title {
+    font-size: 1.8rem;
+  }
+
+  .task-input,
+  .task-list {
+    padding: 18px;
+  }
+
+  .task-input input {
+    flex: 1 1 100%;
+  }
+
+  .add {
+    width: 100%;
+  }
+
+  .task-list li {
+    flex-wrap: wrap;
+  }
+
+  .task-list label {
+    min-width: calc(100% - 40px);
+  }
+
+  .edit-input {
+    min-width: calc(100% - 40px);
+  }
+
+  .edit-btn,
+  .delete-btn {
+    flex: 1;
+  }
+}
+
+/* ==========================================================
+   10. ACCESSIBILITY: respect users who disable animation
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
